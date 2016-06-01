@@ -1,0 +1,25 @@
+#!/bin/bash -l
+#PBS -N job_ppcmpt
+#PBS -M guangsha@umich.edu
+#PBS -m abe
+#PBS -q flux
+#PBS -A kioup_flux
+#PBS -l qos=flux
+#PBS -V
+#PBS -l nodes=1:ppn=6:nehalem,pmem=4000mb,walltime=00:30:00
+
+cd $PBS_O_WORKDIR
+
+start=$(date)
+startSec=$(date +%s)
+echo "Start Time:" $start
+
+mpirun -n 6 ./sum_of_products > log
+
+end=$(date)
+endSec=$(date +%s)
+
+DIFF=$(( $endSec - $startSec ))
+echo "Start Time:" $start
+echo "End Time:" $end 
+echo "Time Used:" `date +%H:%M:%S -ud @${DIFF}`
